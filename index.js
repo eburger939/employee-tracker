@@ -20,13 +20,13 @@ function init() {
     .then(function(data) {
         if (data.option === "View all departments" || data.option === "View all roles" || data.option === "View all employees") {
             viewDRE.push(data.option)
-            // viewOption(viewDRE)
-            View(viewDRE)
+            View.viewData(viewDRE);
+            //need await???
             init();
         } else if (data.option === "Add a department" || data.option === "Add a role" || data.option === "Add an employee") {
             // addDRE.push(data.option)
             // addOption(data.option)
-            switch(data.optipn) {
+            switch(data.option) {
                 case "Add a department":
                     addDepartment();
                     break;
@@ -42,12 +42,6 @@ function init() {
     })
 }
 
-// function viewOption(viewDRE) {
-//    View(viewDRE);
- 
-//     init()
-   
-// }
 
 
 function addDepartment() {
@@ -62,6 +56,7 @@ function addDepartment() {
     ]) //add department to database (use class constructor)
     // console.log(`Added ${department} to the database`)
     .then((data) => {
+        Add.addNewDepartment(data);
         init()
     })
 }
@@ -91,6 +86,7 @@ function addRole() {
     ]) //add role to database(use class constructor?)
     // console.log(`Added ${role} to the database`)
     .then((data) => {
+        Add.addNewRole(data)
         init()
     })
 }
@@ -125,6 +121,7 @@ function addEmployee() {
     //add name so it will appear below in the update employee section choices
     // console.log(`Added ${firstName} ${lastName} to the database`)
     .then((data) => {
+        Add.addNewEmployee(data)
         init()
     })
 }

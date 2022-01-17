@@ -13,3 +13,14 @@ SELECT employee.id, employee.first_name, employee.last_name, roleE.title, depart
 FROM employee_tracker.employee
 join roleE ON employee.role_id = roleE.id
 join department ON roleE.department_id = department.id;
+
+
+-- insert into queries
+-- insert into department (name)
+-- values 
+
+-- insert into roleE (title, salary, department_id)
+-- values 
+
+-- insert into employee (first_name, last_name, role_id, manager_id)
+-- values 
