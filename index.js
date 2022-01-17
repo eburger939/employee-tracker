@@ -4,6 +4,7 @@ const { allowedNodeEnvironmentFlags } = require('process')
 const Add = require('./lib/add')
 const Update = require('./lib/update')
 const View = require('./lib/view')
+const cTable = require('console.table')
 let viewDRE;
 let addDRE;
 
