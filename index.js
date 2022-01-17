@@ -1,12 +1,10 @@
 const inquirer = require ('inquirer')
 const mysql = require('mysql2')
-const { allowedNodeEnvironmentFlags } = require('process')
 const Add = require('./lib/add')
 const Update = require('./lib/update')
 const View = require('./lib/view')
 const cTable = require('console.table')
-let viewDRE;
-let addDRE;
+
 
 function init() {
     inquirer
@@ -21,12 +19,14 @@ function init() {
     ])
     .then(function(data) {
         if (data.option === "View all departments" || data.option === "View all roles" || data.option === "View all employees") {
-            // viewDRE.push(data.option)
-            viewOption(data.option)
+            viewDRE.push(data.option)
+            // viewOption(viewDRE)
+            View(viewDRE)
+            init();
         } else if (data.option === "Add a department" || data.option === "Add a role" || data.option === "Add an employee") {
             // addDRE.push(data.option)
             // addOption(data.option)
-            switch(data.optin) {
+            switch(data.optipn) {
                 case "Add a department":
                     addDepartment();
                     break;
@@ -42,15 +42,12 @@ function init() {
     })
 }
 
-function viewOption() {
-    // inquirer
-    // .prompt([
-
-    // ])
-    .then((data) => {
-        init()
-    })
-}
+// function viewOption(viewDRE) {
+//    View(viewDRE);
+ 
+//     init()
+   
+// }
 
 
 function addDepartment() {

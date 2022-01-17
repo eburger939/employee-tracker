@@ -9,7 +9,7 @@ FROM employee_tracker.roleE
 join department ON roleE.department_id = department.id;
 
 -- query to view employees
--- does not include department name!!!!
-SELECT employee.id, employee.first_name, employee.last_name, roleE.title, roleE.salary, employee.manager_id
+SELECT employee.id, employee.first_name, employee.last_name, roleE.title, department.name, roleE.salary, employee.manager_id
 FROM employee_tracker.employee
-join roleE ON employee.role_id = roleE.id;
+join roleE ON employee.role_id = roleE.id
+join department ON roleE.department_id = department.id;
