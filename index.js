@@ -143,7 +143,7 @@ function updateOption() {
         message: "Which employee's role do you want to update?",
         name: "updateEmployee"
         // choices: [//need to pull from DB]
-    }
+    },
     {
         type: "input",
         message: "What role do you want to assign to the selected employee?",

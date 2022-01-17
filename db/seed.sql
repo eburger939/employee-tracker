@@ -15,13 +15,6 @@ values ("Marketing assistant", 50000, 1)
        ("Operations manager", 55000 5)
 
 insert into employee(first_name, last_name, role_id, manager_id)
-
-CREATE TABLE employee (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  first_name varchar(30),
-  last_name varchar(30),
-  role_id INT
-  manager_id int
-  foreign key (role_id),
-  foreign key (manager_id)
-);
+values ("Emily", "Burger", 1, 5)
+       ("Kendra", "Forster", 3, 1)
+       ("Issac", "Hulme", 2, 3)
