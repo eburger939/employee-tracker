@@ -47,6 +47,9 @@ function viewOption() {
     // .prompt([
 
     // ])
+    .then((data) => {
+        init()
+    })
 }
 
 
@@ -61,6 +64,9 @@ function addDepartment() {
 
     ]) //add department to database (use class constructor)
     // console.log(`Added ${department} to the database`)
+    .then((data) => {
+        init()
+    })
 }
 
 function addRole() {
@@ -78,12 +84,18 @@ function addRole() {
           },
         {
             type: 'input',
-            message: "What department is this role in?",
+            message: "Which department is this role in?",
             name: 'roleDepartment',
+            //need to add whatever other departments are added from above
+            //need to pull choices from the DB
+            choices: ["Marketing", "Finance", "Human Resources", "Information Technology", "Operations"]
           },
 
     ]) //add role to database(use class constructor?)
     // console.log(`Added ${role} to the database`)
+    .then((data) => {
+        init()
+    })
 }
 
 function addEmployee() {
@@ -103,26 +115,47 @@ function addEmployee() {
             type: 'input',
             message: "What is the role of the employee?",
             name: 'employeeRole',
+            choices: ["Marketing assistant", "Principle accountant", "Human Resource Specialist", "IT Manager", "Operations Manager"]
           },
           {
             type: 'input',
             message: "Who is the employee's manager?",
             name: 'manager',
+            choices: ["Katy Herring", "Bryce Vang", "Jarrod Medrano", "Debra Key", "Archer Poole"]
           },
 
     ]) //add to database with class constructor 
+    //add name so it will appear below in the update employee section choices
     // console.log(`Added ${firstName} ${lastName} to the database`)
+    .then((data) => {
+        init()
+    })
 }
 
 
 
 //need to pull first/last name from the database 
-// function updateOption() {
-//     inquirer
-//     .prompt([
+function updateOption() {
+    inquirer
+    .prompt([
+    {
+        type: 'input',
+        message: "Which employee's role do you want to update?",
+        name: "updateEmployee"
+        // choices: [//need to pull from DB]
+    }
+    {
+        type: "input",
+        message: "What role do you want to assign to the selected employee?",
+        name: "updateRole",
+        choices: ["Marketing assistant", "Principle accountant", "Human Resource Specialist", "IT Manager", "Operations Manager"]
+    }
 
-//     ])
-// }
+    ])
+    .then((data) => {
+        init()
+    });
+}
 
 
 
