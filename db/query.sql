@@ -15,7 +15,7 @@ join roleE ON employee.role_id = roleE.id
 join department ON roleE.department_id = department.id;
 
 
--- insert into queries
+-- INSERTING NEW DATA INTO DB
 -- insert into department (name)
 -- values 
 
@@ -24,3 +24,8 @@ join department ON roleE.department_id = department.id;
 
 -- insert into employee (first_name, last_name, role_id, manager_id)
 -- values 
+
+-- UPDATING INFORMATION ON A TABLE
+-- update employee_tracker.employee
+-- set employee.title = **whatever they choice to update to
+-- where employee.first_name = **whatever person selected**
