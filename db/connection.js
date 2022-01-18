@@ -1,19 +1,15 @@
-// const mysql = require('mysql2').createConnectionPromise;
-// const mysql = require('mysql2/promise')
-const mysql = require('mysql2')
-// const bluebird = require('bluebird')
+const mysql = require('mysql2');
+const {promisify} = require('util');
 
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Heg123duz!@#',
+    password: '',
     database: 'employee_tracker',
-    // Promise: bluebird
   });
 
   connection.connect(); 
-// connection.connect(function(err) {
-//     if (err) throw err;
-//     console.log("Connected!");
-//   });
+
+  connection.query = promisify(connection.query);
+
   module.exports = connection

@@ -14,18 +14,28 @@ FROM employee_tracker.employee
 join roleE ON employee.role_id = roleE.id
 join department ON roleE.department_id = department.id;
 
+-- query to view employees with name concated and manager name displaying instead of a number
+SELECT * FROM employee_tracker.employee;
+use employee_tracker;
 
--- INSERTING NEW DATA INTO DB
--- insert into department (name)
--- values 
+select e.id, CONCAT(e.first_name, ' ', e.last_name) AS Name, role.title, department.name, role.salary,
+concat(a.first_name, ' ', a.last_name) AS manager
+from employee e
+left join employee a ON
+a.id = e.manager_id
+join role ON e.role_id = role.id
+join department ON role.department_id = department.id;
 
--- insert into roleE (title, salary, department_id)
--- values 
+SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, employee.manager_id
+FROM employee
+join role ON employee.role_id = role.id
+join department ON role.department_id = department.id
+left join employee a on a.id = manager_id;
 
--- insert into employee (first_name, last_name, role_id, manager_id)
--- values 
 
--- UPDATING INFORMATION ON A TABLE
--- update employee_tracker.employee
--- set employee.title = **whatever they choice to update to
--- where employee.first_name = **whatever person selected**
+-- select distinct manager
+select distinct e.manager_id, 
+concat(a.first_name, ' ', a.last_name) AS manager
+from employee e
+join employee a ON
+a.id = e.manager_id
