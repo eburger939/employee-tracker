@@ -1,9 +1,8 @@
 const inquirer = require ('inquirer')
-const mysql = require('mysql2')
-const Add = require('./lib/add')
-const Update = require('./lib/update')
-const View = require('./lib/view')
-const cTable = require('console.table')
+
+const db = require('./db/calls')
+require('console.table')
+
 
 
 function init() {
@@ -13,36 +12,62 @@ function init() {
             type: "list",
             message:"What would you like to do?",
             name: "option",
-            choices:["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee role"]
+            choices:["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Quit"]
           }
         
     ])
     .then(function(data) {
-        if (data.option === "View all departments" || data.option === "View all roles" || data.option === "View all employees") {
-            viewDRE.push(data.option)
-            View.viewData(viewDRE);
-            //need await???
-            init();
-        } else if (data.option === "Add a department" || data.option === "Add a role" || data.option === "Add an employee") {
-            // addDRE.push(data.option)
-            // addOption(data.option)
-            switch(data.option) {
-                case "Add a department":
-                    addDepartment();
-                    break;
-                case "Add a role":
-                    addRole();
-                    break;
-                default:
-                    addEmployee();
-            }
-        } else {
-            updateOption(data.option)
+        switch (data.option) {
+            case "View all departments":
+                return viewAllDepartment();
+            case "View all roles":
+                return viewAllRoles();
+            case "View all employees":
+                return viewAllEmployees();
+            case "Add a department":
+                return addDepartment();
+            case "Add a role":
+                return addRole();
+            case "Add an employee":
+                return addEmployee();
+            case "Update an employee role":
+                return updateOption();
+            default:
+                return quit();
         }
+     
     })
 }
 
+function quit() {
+    console.log('Goodbye')
+    process.exit()
+}
 
+// async function viewAllDepartment() {
+//     const department = await db.findAllDepartments();
+
+//     console.table(department);
+//     init();
+    
+// }
+
+// async function viewAllRoles() {
+//     const roles = await db.findAllRoles();
+
+//     console.table(roles);
+//     init();
+    
+// }
+
+async function viewAllEmployees() {
+    const employees = await db.findAllEmployees();
+
+    console.table(employees);
+    // console.log(employees)
+    init();
+    
+}
 
 function addDepartment() {
     inquirer
@@ -143,6 +168,7 @@ function updateOption() {
         message: "What role do you want to assign to the selected employee?",
         name: "updateRole",
         choices: ["Marketing assistant", "Principle accountant", "Human Resource Specialist", "IT Manager", "Operations Manager"]
+        //need to pull choices from the db??
     }
 
     ])
