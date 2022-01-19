@@ -53,6 +53,37 @@ class DB {
       )
 
   }
+
+  updateEmployeeManager(update){
+      return this.connection.query(
+        "UPDATE employee SET manager_id = ? WHERE id = ?", [update.updateManager, update.updateEmployee]
+      )
+
+  }
+
+  viewEmployeeByManager(employee){
+      return this.connection.query(
+        "select CONCAT(first_name, ' ', last_name) AS Employee from employee where manager_id = ?", employee.employeeMan
+      )
+
+  }
+  viewEmployeeByDepartment(){
+
+  }
+  
+  deleteDepartment(){
+
+  }
+  deleteRole() {
+
+  }
+  deleteEmployee(){
+
+  }
+  
+  viewTotalDepartmentBudget() {
+
+  }
 }
 
 

@@ -11,7 +11,7 @@ function init() {
                 type: "list",
                 message: "What would you like to do?",
                 name: "option",
-                choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Quit"]
+                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Quit"]
             }
 
         ])
@@ -23,6 +23,10 @@ function init() {
                     return viewAllRoles();
                 case "View all employees":
                     return viewAllEmployees();
+                case "View employee by manager name":
+                    return viewEmplByM();
+                case "Update an employee manager":
+                    return updateManOfEmpl();
                 case "Add a department":
                     return addDepartment();
                 case "Add a role":
@@ -65,6 +69,25 @@ async function viewAllEmployees() {
     console.table(employees);
     init();
 
+}
+
+async function viewEmplByM(){
+    const managers = await db.findAllManagers();
+    const mapManagers = managers.map(({id, Name}) => ({
+        name: Name,
+        value: id
+    }))
+    let employee = await prompt([
+        {
+            type: 'list',
+            message: "Which manager's employees do you want to see?",
+            name: 'employeeMan',
+            choices: mapManagers,
+        },    
+    ])
+    const newManE = await db.viewEmployeeByManager(employee);
+    console.table(newManE)
+    init();
 }
 
 async function addDepartment() {
@@ -161,8 +184,6 @@ async function addEmployee() {
         init()
 }
 
-
-
 async function updateOption() {
     const managers = await db.findAllManagers();
     const mapManagers = managers.map(({id, Name}) => ({
@@ -190,10 +211,37 @@ async function updateOption() {
 
         ])
         await db.updateEmployee(update)
-        console.log(`Employee role was updated`)
+        console.log(`Employee manager was updated`)
         init()
     }
 
+async function updateManOfEmpl(){
+    const managers = await db.findAllManagers();
+    const mapManagers = managers.map(({id, Name}) => ({
+        name: Name,
+        value: id
+    }))
+    const update = await prompt([
+        {
+            type: 'list',
+            message: "Which employee do you want to update the manager?",
+            name: "updateEmployee",
+            choices: mapManagers,
+        },
+        {
+            type: "list",
+            message: "What manager do you want to assign to the selected employee?",
+            name: "updateManager",
+            choices: mapManagers,
+        }
+
+    ])
+    console.log(update)
+    await db.updateEmployeeManager(update)
+    console.log(`Employee role was updated`)
+    init()
+
+}
 
 
 
