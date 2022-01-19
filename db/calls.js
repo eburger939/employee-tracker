@@ -79,7 +79,10 @@ class DB {
           "DELETE FROM department where id = ?", removeDepartment.department
       )
   }
-  deleteRole() {
+  deleteRole(removeRole) {
+      return this.connection.query(
+          "delete from role where id = ?", removeRole.title
+      )
 
   }
   deleteEmployee(){
