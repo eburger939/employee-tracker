@@ -12,7 +12,7 @@ function init() {
                 type: "list",
                 message: "What would you like to do?",
                 name: "option",
-                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "View employee by department", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Delete a department", "Delete a role", "Delete an employee", "Quit"]
+                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "View employee by department", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Delete a department", "Delete a role", "Delete an employee", "View department budget", "Quit"]
             }
 
         ])
@@ -44,6 +44,8 @@ function init() {
                     return removeRole();
                 case "Delete an employee":
                     return removeEmployee();
+                case "View department budget":
+                    return viewBudgetForDept();
                 default:
                     return quit();
             }
@@ -331,9 +333,52 @@ async function removeEmployee(){
     console.log(`Role was deleted`)
     init();
 
+async function viewBudgetForDept(){
+    const department = await db.findAllDepartments();
+    const mapDepartments = department.map(({id, name}) => ({
+        name: name,
+        value: id
+    }))
+    let budget = await prompt([
+        {
+            type: 'list',
+            message: "What department do you want to know the total budget for?",
+            name: 'department',
+            choices: mapDepartments
+        },
+
+    ]);
+
+await db.viewTotalDepartmentBudget(removeDepartment);
+console.log(`${removeDepartment.name} was deleted`)
+
+init()
+
 }
 
+}
 
+async function viewBudgetForDept(){
+    const department = await db.findAllDepartments();
+    const mapDepartments = department.map(({id, name}) => ({
+        name: name,
+        value: id
+    }))
+    let budget = await prompt([
+        {
+            type: 'list',
+            message: "What department do you want to know the total budget for?",
+            name: 'department',
+            choices: mapDepartments
+        },
+
+    ]);
+console.log(budget)
+const budgetTable = await db.viewTotalDepartmentBudget(budget);
+console.table(budgetTable)
+init()
+
+}
 
 
 

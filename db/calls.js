@@ -92,7 +92,10 @@ class DB {
 
   }
   
-  viewTotalDepartmentBudget() {
+  viewTotalDepartmentBudget(budget) {
+    return this.connection.query(
+      "select SUM(salary) AS Budget from role where department_id = ?", budget.department
+    )
 
   }
 }
