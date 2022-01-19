@@ -67,7 +67,10 @@ class DB {
       )
 
   }
-  viewEmployeeByDepartment(){
+  viewEmployeeByDepartment(listBD){
+      return this.connection.query(
+        "select CONCAT(e.first_name, ' ', e.last_name) AS Employee from employee e left join employee a ON a.id = e.manager_id join role ON e.role_id = role.id join department ON role.department_id = department.id where department_id = ?", listBD.department
+      )
 
   }
   

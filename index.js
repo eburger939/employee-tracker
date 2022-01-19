@@ -1,4 +1,5 @@
-const {prompt} = require('inquirer')
+const {prompt} = require('inquirer');
+const { async } = require('rxjs');
 
 const db = require('./db/calls')
 require('console.table')
@@ -11,7 +12,7 @@ function init() {
                 type: "list",
                 message: "What would you like to do?",
                 name: "option",
-                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Quit"]
+                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "View employee by department", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Quit"]
             }
 
         ])
@@ -25,6 +26,8 @@ function init() {
                     return viewAllEmployees();
                 case "View employee by manager name":
                     return viewEmplByM();
+                case "View employee by department":
+                    return viewEBD();
                 case "Update an employee manager":
                     return updateManOfEmpl();
                 case "Add a department":
@@ -87,6 +90,26 @@ async function viewEmplByM(){
     ])
     const newManE = await db.viewEmployeeByManager(employee);
     console.table(newManE)
+    init();
+}
+
+async function viewEBD(){
+    const department = await db.findAllDepartments();
+    const mapDepartments = department.map(({id, name}) => ({
+        name: name,
+        value: id
+    }))
+    let depSearch = await prompt([
+        {
+            type: 'list',
+            message: "What department do you want a list of employees for?",
+            name: 'department',
+            choices: mapDepartments,
+        },    
+    ])
+    console.log(depSearch)
+    const listBD = await db.viewEmployeeByDepartment(depSearch);
+    console.table(listBD)
     init();
 }
 
