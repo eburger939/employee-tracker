@@ -46,6 +46,13 @@ class DB {
           "INSERT INTO employee SET ?", newEmployee
       )
   }
+
+  updateEmployee(update) {
+      return this.connection.query(
+          "UPDATE employee SET role_id = ? WHERE ID =?", [update.updateRole, update.updateEmployee]
+      )
+
+  }
 }
 
 

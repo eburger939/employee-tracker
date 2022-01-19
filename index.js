@@ -145,13 +145,13 @@ async function addEmployee() {
                 type: 'list',
                 message: "What is the role of the employee?",
                 name: 'role_id',
-                choices: mapRoles
+                choices: mapRoles,
             },
             {
                 type: 'list',
                 message: "Who is the employee's manager?",
                 name: 'manager_id',
-                choices: mapManagers
+                choices: mapManagers,
             },
 
         ]) 
@@ -163,29 +163,38 @@ async function addEmployee() {
 
 
 
-//need to pull first/last name from the database 
-function updateOption() {
-    inquirer
-        .prompt([
+async function updateOption() {
+    const managers = await db.findAllManagers();
+    const mapManagers = managers.map(({id, Name}) => ({
+        name: Name,
+        value: id
+    }))
+    const roles = await db.findAllRoles();
+    const mapRoles = roles.map(({id, title}) => ({
+        name: title,
+        value: id
+    }))
+    const update = await prompt([
             {
-                type: 'input',
+                type: 'list',
                 message: "Which employee's role do you want to update?",
-                name: "updateEmployee"
-                // choices: [//need to pull from DB]
+                name: "updateEmployee",
+                choices: mapManagers,
             },
             {
-                type: "input",
+                type: "list",
                 message: "What role do you want to assign to the selected employee?",
                 name: "updateRole",
-                choices: ["Marketing assistant", "Principle accountant", "Human Resource Specialist", "IT Manager", "Operations Manager"]
-                //need to pull choices from the db??
+                choices: mapRoles,
             }
 
         ])
-        .then((data) => {
-            init()
-        });
-}
+        await db.updateEmployee(update)
+        console.log(`Employee role was updated`)
+        init()
+    }
+
+
 
 
 
