@@ -267,7 +267,6 @@ async function updateManOfEmpl(){
         }
 
     ])
-    console.log(update)
     await db.updateEmployeeManager(update)
     console.log(`Employee role was updated`)
     init()
