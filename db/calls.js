@@ -85,7 +85,10 @@ class DB {
       )
 
   }
-  deleteEmployee(){
+  deleteEmployee(removeEmployee){
+      return this.connection.query(
+          "delete from employee where id = ?", removeEmployee.title
+      )
 
   }
   
