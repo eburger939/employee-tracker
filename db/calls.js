@@ -94,7 +94,7 @@ class DB {
   
   viewTotalDepartmentBudget(budget) {
     return this.connection.query(
-      "select SUM(salary) AS Budget from role where department_id = ?", budget.department
+      " select SUM(role.salary) AS Budget from employee e left join employee a ON a.id = e.manager_id join role ON e.role_id = role.id join department ON role.department_id = department.id where department_id = ?", budget.department
     )
 
   }

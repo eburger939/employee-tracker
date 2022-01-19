@@ -11,6 +11,9 @@ values ("Marketing assistant", 50000, 1),
        ("Human Resource Specialist", 65000, 3),
        ("IT Manager", 85000, 4),
        ("Operations manager", 55000, 5);
+       ("Cashier", 15000, 1),
+       ("Greeter", 10000, 1),
+       ("Tax assistance", 25000, 2);
 
 insert into employee (first_name, last_name, role_id, manager_id)
 values ("Emily", "Burger", 1, NULL),

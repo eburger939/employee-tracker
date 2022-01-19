@@ -115,7 +115,7 @@ async function viewEBD(){
             choices: mapDepartments,
         },    
     ])
-    console.log(depSearch)
+    
     const listBD = await db.viewEmployeeByDepartment(depSearch);
     console.table(listBD)
     init();
@@ -133,7 +133,7 @@ async function addDepartment() {
         ]);
 
     await db.addNewDepartment(newDepartment);
-    console.log(`${newDepartment.name} was added`)
+    console.log(`New department was added`)
 
     init()
 
@@ -167,7 +167,7 @@ async function addRole() {
         ])
 
         await db.addNewRole(newRole);
-        console.log(`${newRole.title} was added`)
+        console.log(`New role was added`)
     
         init()
 }
@@ -291,7 +291,7 @@ async function removeDepartment(){
     ]);
 
 await db.deleteDepartment(removeDepartment);
-console.log(`${removeDepartment.name} was deleted`)
+console.log(`Department was deleted`)
 
 init()
 }
@@ -332,30 +332,6 @@ async function removeEmployee(){
     await db.deleteEmployee(removeEmployee);
     console.log(`Role was deleted`)
     init();
-
-async function viewBudgetForDept(){
-    const department = await db.findAllDepartments();
-    const mapDepartments = department.map(({id, name}) => ({
-        name: name,
-        value: id
-    }))
-    let budget = await prompt([
-        {
-            type: 'list',
-            message: "What department do you want to know the total budget for?",
-            name: 'department',
-            choices: mapDepartments
-        },
-
-    ]);
-
-await db.viewTotalDepartmentBudget(removeDepartment);
-console.log(`${removeDepartment.name} was deleted`)
-
-init()
-
-}
-
 }
 
 async function viewBudgetForDept(){
@@ -373,7 +349,7 @@ async function viewBudgetForDept(){
         },
 
     ]);
-console.log(budget)
+
 const budgetTable = await db.viewTotalDepartmentBudget(budget);
 console.table(budgetTable)
 init()
