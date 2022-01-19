@@ -74,8 +74,10 @@ class DB {
 
   }
   
-  deleteDepartment(){
-
+  deleteDepartment(removeDepartment){
+      return this.connection.query(
+          "DELETE FROM department where id = ?", removeDepartment.department
+      )
   }
   deleteRole() {
 

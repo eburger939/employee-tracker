@@ -12,7 +12,7 @@ function init() {
                 type: "list",
                 message: "What would you like to do?",
                 name: "option",
-                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "View employee by department", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Quit"]
+                choices: ["View all departments", "View all roles", "View all employees", "View employee by manager name", "View employee by department", "Add a department", "Add a role", "Add an employee", "Update an employee role", "Update an employee manager", "Delete a department", "Quit"]
             }
 
         ])
@@ -38,6 +38,8 @@ function init() {
                     return addEmployee();
                 case "Update an employee role":
                     return updateOption();
+                case "Delete a department":
+                    return removeDepartment();
                 default:
                     return quit();
             }
@@ -236,7 +238,7 @@ async function updateOption() {
         await db.updateEmployee(update)
         console.log(`Employee manager was updated`)
         init()
-    }
+}
 
 async function updateManOfEmpl(){
     const managers = await db.findAllManagers();
@@ -264,6 +266,28 @@ async function updateManOfEmpl(){
     console.log(`Employee role was updated`)
     init()
 
+}
+
+async function removeDepartment(){
+    const department = await db.findAllDepartments();
+    const mapDepartments = department.map(({id, name}) => ({
+        name: name,
+        value: id
+    }))
+    let removeDepartment = await prompt([
+        {
+            type: 'list',
+            message: "What department would you like to delete?",
+            name: 'department',
+            choices: mapDepartments
+        },
+
+    ]);
+
+await db.deleteDepartment(removeDepartment);
+console.log(`${removeDepartment.name} was deleted`)
+
+init()
 }
 
 
